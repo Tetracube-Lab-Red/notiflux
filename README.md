@@ -8,9 +8,9 @@ Notiflux is a service that consumes devices telemetries coming from mqtt and sen
 sequenceDiagram
     participant MQTT
     participant NotiFlux
-    partecipant Firebase
-    partecipant device-pulsar
-    partecipant database
+    participant Firebase
+    participant device-pulsar
+    participant database
     MQTT->>NotiFlux: Consumes devices telemetries topic
     NotiFlux->>device-pulsar: Requests telemetry data
     loop LoadRulesPlugins
