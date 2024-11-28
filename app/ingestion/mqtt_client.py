@@ -1,6 +1,6 @@
 import paho.mqtt.client as mqtt
 
-from app import logger
+from app.core import logger
 
 _mqttc = mqtt.Client(mqtt.CallbackAPIVersion.VERSION2)
 

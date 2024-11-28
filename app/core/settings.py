@@ -1,12 +1,12 @@
 from dataclasses import dataclass
 import os
-from app import logger
+from app.core import logger
 
-settings = []
+settings = {}
 
-def load_settings(self):
+def load_settings():
         logger.info("Loading NotiFlux settings")
-        self.roles_folders = _load_environment_variable('ROLES_FOLDERS').split(',')
+        settings['roles_folders'] = _load_environment_variable('ROLES_FOLDERS').split(',')
         
 def _load_environment_variable(env_name: str) -> str:
     try:
