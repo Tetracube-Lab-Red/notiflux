@@ -5,17 +5,13 @@ Notiflux is a service that consumes devices telemetries coming from mqtt and sen
 ## Data pipeline
 
 ```mermaid
-sequenceDiagram
-    participant MQTT
-    participant NotiFlux
-    participant Firebase
-    participant device-pulsar
-    participant database
-    MQTT->>NotiFlux: Consumes devices telemetries topic
-    NotiFlux->>device-pulsar: Requests telemetry data
-    loop LoadRulesPlugins
-        NotiFlux->>NotiFlux: Load all rules plugins in the folder and execute the check methods
-    end
-    NotiFlux->>Firebase: If there is an alert send that
-    Bvob-->>database: Store the alert
+flowchart TD
+    dev-pulsar[Device Pulsar] -->|Publishes devices telemetry| mqtt(MQTT Broker)
+    notiflux -->|Consumes devices telemetry| mqtt(MQTT Broker)
+    notiflux -->|Loads| scripts[Rules scripts]
+    scripts[Rules scripts] -->|Checks| E[Devices telemetries]
+    scripts[Rules scripts] -->|Return check| notiflux
+    notiflux --> alert{Is there some broken rule?}
+    alert -->|yes| firebase[Send notification via Firebase]
+    alert -->|yes| db[Stores alert in PotgreSQL]
 ```
