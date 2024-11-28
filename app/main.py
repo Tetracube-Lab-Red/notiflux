@@ -10,7 +10,7 @@ from app import logger, settings
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     logger.info("Custom startup operations")
-    rule_engine.load_rules(settings=settings)
+    rule_engine.load_rules(settings=settings.settings)
     mqtt_client.start_consume()
     yield
     logger.info("Custom shutdown operations")

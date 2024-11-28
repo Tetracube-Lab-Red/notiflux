@@ -10,7 +10,8 @@
                 "dev",
                 "app/main.py"
             ],
-            "jinja": true
+            "jinja": true,
+            "envFile": "${workspaceFolder}/.env"
         }
     ]
 }
