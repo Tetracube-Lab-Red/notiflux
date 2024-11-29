@@ -15,3 +15,19 @@ flowchart TD
     alert -->|yes| firebase[Send notification via Firebase]
     alert -->|yes| db[Stores alert in PotgreSQL]
 ```
+
+## Rule script
+
+This is the minimal example for a rule script
+
+```python
+import logging
+
+HANDLED_DEVICE = "UPS"
+
+logger = logging.getLogger("uvicorn")
+
+def evaluate(telemetry: dict):
+    logger.info("Running evaluation method for low input voltage")
+    return True
+```
