@@ -2,6 +2,7 @@ from contextlib import asynccontextmanager
 from typing import Union
 from fastapi import FastAPI
 
+from app.engine.rules_scripts_loader import load_scripts
 from app.ingestion import mqtt_client
 from app.engine import rule_engine
 from app.core import logger, settings
@@ -11,7 +12,7 @@ from app.core import logger, settings
 async def lifespan(app: FastAPI):
     logger.info("Custom startup operations")
     settings.load_settings()
-    rule_engine.load_rules(settings=settings.settings)
+    load_scripts()
     mqtt_client.start_consume()
     yield
     logger.info("Custom shutdown operations")
