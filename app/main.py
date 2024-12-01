@@ -1,17 +1,18 @@
 from contextlib import asynccontextmanager
-from typing import Union
-from fastapi import FastAPI
+from typing import Annotated, Union
+from fastapi import Depends, FastAPI
+from sqlmodel import Session
 
+from app.core import logger
+from app.database.db_context import create_db_and_tables
 from app.engine.rules_scripts_loader import load_scripts
 from app.ingestion import mqtt_client
-from app.engine import rule_engine
-from app.core import logger, settings
 
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     logger.info("Custom startup operations")
-    settings.load_settings()
+    create_db_and_tables()
     load_scripts()
     mqtt_client.start_consume()
     yield

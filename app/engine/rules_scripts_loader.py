@@ -1,7 +1,7 @@
 from collections import defaultdict
 import importlib
 import os
-from app.core import logger, settings
+from app.core.settings import logger, settings
 from app.enumerations.device_type import DeviceType
 
 rules_scripts = defaultdict(list)
@@ -15,7 +15,7 @@ def load_script(script_path):
 
 def load_scripts():
     logger.info('Loading rules scripts')
-    scripts_folder = settings.settings['roles_folders']
+    scripts_folder = settings.roles_folders
     for filename in os.listdir(scripts_folder):
         if filename.endswith(".py"):
             script_path = os.path.join(scripts_folder, filename)
