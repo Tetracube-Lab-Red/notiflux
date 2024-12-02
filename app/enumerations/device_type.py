@@ -1,4 +1,4 @@
 from enum import Enum
 
 class DeviceType(Enum):
-    UPS = 1
+    UPS = "UPS"
