@@ -15,7 +15,7 @@ def load_script(script_path):
 
 def load_scripts():
     logger.info('Loading rules scripts')
-    scripts_folder = settings.roles_folders
+    scripts_folder = settings.rules_folders
     for filename in os.listdir(scripts_folder):
         if filename.endswith(".py"):
             script_path = os.path.join(scripts_folder, filename)

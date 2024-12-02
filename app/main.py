@@ -1,10 +1,9 @@
 from contextlib import asynccontextmanager
-from typing import Annotated, Union
 from fastapi import Depends, FastAPI
-from sqlmodel import Session
 
+from app.devices import devices_routes as devices_router
 from app.core import logger
-from app.database.db_context import create_db_and_tables
+from app.database.db_context import create_db_and_tables, get_database
 from app.engine.rules_scripts_loader import load_scripts
 from app.ingestion import mqtt_client
 
@@ -24,14 +23,7 @@ app = FastAPI(
     title="Notiflux",
     description="Make something useful with TetraCube.Red Platform data",
     version="1.0.0",
-    lifespan=lifespan
+    lifespan=lifespan,
+    dependencies=[Depends(get_database)]
 )
-
-@app.get("/")
-def read_root():
-    return {"Hello": "World"}
-
-
-@app.get("/items/{item_id}")
-def read_item(item_id: int, q: Union[str, None] = None):
-    return {"item_id": item_id, "q": q}
+app.include_router(devices_router.router)

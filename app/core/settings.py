@@ -5,7 +5,7 @@ from app.core import logger
 
 @dataclass
 class Settings():
-    roles_folders: str
+    rules_folders: str
     mqtt_broker_host: str
     ups_module_enabled: bool
     ups_module_api_url: str
@@ -17,7 +17,7 @@ class Settings():
 
     def __init__(self):
         logger.info("Loading NotiFlux settings")
-        self.roles_folders = f'{Path.cwd()}/rules/'
+        self.rules_folders = f'{Path.cwd()}/rules/'
         self.mqtt_broker_host = self._load_environment_variable('MQTT_BROKER_HOST')
         self.ups_module_enabled = self._load_environment_variable('UPS_MODULE_ENABLED') == 'True'
         self.ups_module_api_url = self._load_environment_variable('UPS_MODULE_API_URL')

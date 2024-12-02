@@ -27,8 +27,7 @@ async def send_firebase_notification():
 async def run_rules(device_type: DeviceType, device_name: str):
     logger.info(f"Gatering devices information for {device_name}")
     if device_type not in rules_scripts:
-        logger.warning(
-            f"No scripts available to handle device type: {device_type}")
+        logger.warning(f'No scripts available to handle device type: {device_type}')
         return
     device_telemetry = {}
     match device_type:
