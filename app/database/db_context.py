@@ -1,4 +1,4 @@
-from sqlmodel import SQLModel, create_engine
+from sqlmodel import SQLModel, create_engine, Session
 from sqlalchemy.orm import scoped_session, sessionmaker
 
 from app.core.settings import settings
@@ -23,8 +23,5 @@ def create_db_and_tables():
 
 
 def get_database():
-    db = default_session()
-    try:
-        yield db
-    finally:
-        db.close()
+    with Session(engine) as session:
+        yield session

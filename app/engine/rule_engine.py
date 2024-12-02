@@ -1,8 +1,8 @@
 from datetime import datetime
-
+from sqlmodel import select
 from app.core import logger
 from app.database.db_context import get_database
-from app.database.entities import Alert
+from app.database.entities import Alert, Device
 from app.enumerations.device_type import DeviceType
 from app.clients import ups_pulsar_api_client as ups_api
 from app.engine.rules_scripts_loader import rules_scripts
@@ -26,9 +26,19 @@ async def send_firebase_notification():
 
 async def run_rules(device_type: DeviceType, device_name: str):
     logger.info(f"Gatering devices information for {device_name}")
+    db = next(get_database())
     if device_type not in rules_scripts:
         logger.warning(f'No scripts available to handle device type: {device_type}')
         return
+    
+    device = db.exec(
+        select(Device).where(Device.device_internal_name == device_name)
+        
+    ).first()
+    if device == None:
+        logger.error(f'Device {device_name} not found')
+        return
+
     device_telemetry = {}
     match device_type:
         case DeviceType.UPS:
