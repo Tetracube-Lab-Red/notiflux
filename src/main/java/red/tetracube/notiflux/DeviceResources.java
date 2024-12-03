@@ -1,5 +1,6 @@
 package red.tetracube.notiflux;
 
+import jakarta.inject.Inject;
 import org.eclipse.microprofile.openapi.annotations.parameters.RequestBody;
 
 import io.quarkus.security.Authenticated;
@@ -12,11 +13,15 @@ import jakarta.ws.rs.Path;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
 import red.tetracube.notiflux.dto.DeviceProvisioningRequest;
+import red.tetracube.notiflux.services.DevicesServices;
 
 @RequestScoped
 @Authenticated
 @Path("/devices")
 public class DeviceResources {
+
+    @Inject
+    DevicesServices devicesServices;
 
     @RunOnVirtualThread
     @POST
@@ -24,7 +29,7 @@ public class DeviceResources {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public void deviceCreate(@RequestBody @Valid DeviceProvisioningRequest request) {
-       
+        devicesServices.deviceProvisioning(request);
     }
 
 }

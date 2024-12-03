@@ -2,6 +2,7 @@ package red.tetracube.notiflux.database;
 
 import java.util.UUID;
 
+import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -12,7 +13,7 @@ import red.tetracube.notiflux.enumerations.DeviceType;
 
 @Entity
 @Table(name = "devices")
-public class DeviceEntity {
+public class DeviceEntity extends PanacheEntityBase {
 
     @Id
     public UUID id;
