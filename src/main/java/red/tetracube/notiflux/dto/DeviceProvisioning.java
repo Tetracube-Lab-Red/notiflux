@@ -8,7 +8,7 @@ import red.tetracube.notiflux.enumerations.DeviceType;
 
 import java.util.UUID;
 
-public record DeviceProvisioningRequest(
+public record DeviceProvisioning(
         @NotNull @JsonProperty UUID deviceId,
         @NotNull @JsonProperty DeviceType deviceType,
         @NotNull @NotEmpty @JsonProperty String internalName,

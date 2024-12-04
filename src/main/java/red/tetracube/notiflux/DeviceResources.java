@@ -12,7 +12,7 @@ import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
-import red.tetracube.notiflux.dto.DeviceProvisioningRequest;
+import red.tetracube.notiflux.dto.DeviceProvisioning;
 import red.tetracube.notiflux.services.DevicesServices;
 
 @RequestScoped
@@ -28,8 +28,8 @@ public class DeviceResources {
     @Path("/")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public void deviceCreate(@RequestBody @Valid DeviceProvisioningRequest request) {
-        devicesServices.deviceProvisioning(request);
+    public DeviceProvisioning deviceCreate(@RequestBody @Valid DeviceProvisioning request) {
+        return devicesServices.deviceProvisioning(request);
     }
 
 }
